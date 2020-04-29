@@ -1,8 +1,19 @@
 <script>
-    function convertStringToNumber(string, x) {
-        if (arguments.length < 2) {
-            x = 10
+    function convertStringToNumber(string, x = 10) {
+        let reg = /e|E/.test(string);
+        let num = 0
+        if (!reg) {
+            num = dealNumber(string, x);
+        } else {
+            string = string.toLowerCase();
+            let exponent = string.split('e');
+            num = dealNumber(exponent[0], x) + Math.pow(10, dealNumber(exponent[1], x))
         }
+
+        return num;
+    }
+
+    function dealNumber(string, x) {
         let chars = string.split("");
         let number = 0;
         let i = 0;
@@ -21,12 +32,6 @@
             number += a * fraction;
             i++;
         }
-        // for(let i=0;i<chars.length;i++){
-        //     if(chars[i])
-        //     number = number * x;
-        //     number += chars[i].codePointAt(0) - '0'.codePointAt(0);
-
-        // }
         return number;
     }
 

@@ -1,12 +1,42 @@
+<!DOCTYPE html>
 <script>
-    function convertNumberToString(number, x) {
+    function convertNumberToString(number, x = 10) {
+        if (number == 0) {
+            return "0";
+        }
+
+        let string = "";
         let integer = Math.floor(number);
         let fraction = number - integer;
-        let string = "";
-        while(integer > 0){
-            string = String(integer % x) + string;
+        var letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+        while (integer > 0) {
+            if (x < 11) {
+                string = String(integer % x) + string;
+            } else {
+                let a = letters[String(integer % x)];
+                string = a + string;
+            }
+
             integer = Math.floor(integer / x)
         }
-        return string
+
+        if (fraction > 0) {
+            string = string + '.'
+        }
+
+        while (fraction > 0) {
+            if (x < 11) {
+                string += String(fraction * x);
+            } else {
+                let a = letters[String(fraction * x)];
+                string += a;
+            }
+
+            fraction = Math.floor(fraction / x)
+        }
+
+        return string;
     }
+
+    convertNumberToString(298, 16)
 </script>
